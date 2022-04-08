@@ -1,20 +1,21 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MVCPages.Controllers
 {
     public class TwitterController : Controller
     {
-        private static bool IsUsernameValid(string? username)
-        {
-            return username?.Length is >= 4 and <= 50;
-        }
-
         [HttpGet]
-        [ValidateAntiForgeryToken]
-        public IActionResult Index(string? username)
+        public IActionResult Index(
+            [MaxLength(50)]
+            [MinLength(4)]
+            string? username)
         {
-            if (!IsUsernameValid(username))
+            var usernameValidationState = ModelState.GetFieldValidationState(nameof(username));
+            if (usernameValidationState == ModelValidationState.Invalid)
             {
                 RouteValueDictionary routeInfo = new() { { "username", username } };
                 return RedirectToAction("InvalidData", routeInfo);
@@ -29,15 +30,20 @@ namespace MVCPages.Controllers
         [HttpPost]
         [ActionName("Index")]
         [ValidateAntiForgeryToken]
-        public IActionResult Index_Post(string? username)
+        public IActionResult Index_Post(
+            [MaxLength(50)]
+            [MinLength(4)]
+            [Required]
+            string? username)
         {
-            if (!IsUsernameValid(username))
+            var usernameValidationState = ModelState.GetFieldValidationState(nameof(username));
+            if (usernameValidationState == ModelValidationState.Invalid)
             {
                 RouteValueDictionary routeInfo = new() { { "username", username } };
                 return RedirectToAction("InvalidData", routeInfo);
             }
 
-            //Do Something
+            //Do something
 
             ViewBag.Username = username ?? string.Empty;
             return View();
