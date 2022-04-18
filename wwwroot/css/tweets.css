@@ -1,0 +1,147 @@
+﻿.tweet-container {
+    background: #e6ecf0;
+    font-family: 'Asap', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+.tweet-image {
+    max-width: 100%;
+    max-height: 100%;
+    -webkit-object-fit: cover;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.avator {
+    -ms-border-radius: 100px;
+    border-radius: 100px;
+    width: 48px;
+    margin-right: 15px;
+}
+
+.tweet-wrap {
+    max-width: 490px;
+    background: #fff;
+    margin: 0 auto;
+    /* margin-top: 50px; */
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    padding: 30px;
+}
+
+.tweet-header {
+    display: flex;
+    -ms-align-items: flex-start;
+    -o-align-items: flex-start;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    font-size: 14px;
+}
+
+.tweet-header-info {
+    font-weight: bold;
+}
+
+    .tweet-header-info span {
+        color: #657786;
+        font-weight: normal;
+        margin-left: 5px;
+    }
+
+    .tweet-header-info p {
+        font-weight: normal;
+        margin-top: 5px;
+    }
+
+.tweet-image-wrap {
+    padding-left: 60px;
+}
+
+.tweet-info-counts {
+    display: flex;
+    margin-left: 60px;
+    margin-top: 10px;
+}
+
+    .tweet-info-counts div {
+        display: flex;
+        margin-right: 20px;
+    }
+
+        .tweet-info-counts div svg {
+            color: #657786;
+            margin-right: 10px;
+        }
+
+.tweet-image-full {
+    grid-area: 1 / 1 / 3 / 3;
+}
+
+.tweet-image-left-big {
+    grid-area: 1 / 1 / 3 / 2;
+}
+
+.tweet-image-right-big {
+    grid-area: 1 / 2 / 3 / 3;
+}
+
+.tweet-image-left-small-up {
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+.tweet-image-right-small-up {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+.tweet-image-left-small-down {
+    grid-area: 2 / 1 / 3 / 2;
+}
+
+.tweet-image-right-small-down {
+    grid-area: 2 / 2 / 3 / 3;
+}
+
+.tweet-image-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    max-width: 1200px;
+    max-height: 675px;
+    aspect-ratio: 16/9;
+    text-align: center;
+}
+
+@media screen and (max-width:430px) {
+    .tweet-container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .tweet-header {
+        flex-direction: column;
+    }
+
+        .tweet-header img {
+            margin-bottom: 20px;
+        }
+
+    .tweet-header-info p {
+        margin-bottom: 30px;
+    }
+
+    .tweet-img-wrap {
+        padding-left: 0;
+    }
+
+    .tweet-info-counts {
+        display: flex;
+        margin-left: 0;
+    }
+
+        .tweet-info-counts div {
+            margin-right: 10px;
+        }
+}

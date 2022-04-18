@@ -1,4 +1,4 @@
-namespace MVCPages.Models
+namespace MVCTwitterScraper.Models
 {
     public class ErrorViewModel
     {

@@ -1,27 +1,51 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-using MVCPages.Models;
+using MVCTwitterScraper.Models;
+using MVCTwitterScraper.Models.Twitter;
 
-namespace MVCPages.Controllers
+namespace MVCTwitterScraper.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        [HttpGet]
+        public async Task<IActionResult> Index(
+            [MaxLength(50), MinLength(4)] string? username)
         {
-            _logger = logger;
+            var usernameValidationState = ModelState.GetFieldValidationState(nameof(username));
+            if (usernameValidationState == ModelValidationState.Invalid)
+            {
+                RouteValueDictionary routeInfo = new() { { "username", username } };
+                return RedirectToAction("InvalidData", routeInfo);
+            }
+
+            var userTweetsModel = await UserTweetsModel.CreateModel(username);
+            return View(userTweetsModel);
         }
 
-        public IActionResult Index()
+        [HttpPost]
+        [ActionName("Index")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Index_Post(
+            [MaxLength(50), MinLength(4), Required] string? username)
         {
-            return View();
+            var usernameValidationState = ModelState.GetFieldValidationState(nameof(username));
+            if (usernameValidationState == ModelValidationState.Invalid)
+            {
+                RouteValueDictionary routeInfo = new() { { "username", username } };
+                return RedirectToAction("InvalidData", routeInfo);
+            }
+
+            var userTweetsModel = await UserTweetsModel.CreateModel(username);
+            return View(userTweetsModel);
         }
 
-        public IActionResult Privacy()
+        public IActionResult InvalidData(string username)
         {
+            ViewBag.Username = username;
             return View();
         }
 
