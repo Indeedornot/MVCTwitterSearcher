@@ -3,43 +3,24 @@ using System.Diagnostics;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MVCTwitterSearcher.Models;
+using MVCTwitterSearcher.Services;
 
-using MVCTwitterScraper.Models;
-using MVCTwitterScraper.Models.Twitter;
-
-namespace MVCTwitterScraper.Controllers
+namespace MVCTwitterSearcher.Controllers
 {
     public class HomeController : Controller
     {
-        [HttpGet]
-        public async Task<IActionResult> Index(
-            [MaxLength(50), MinLength(4)] string? username)
-        {
-            var usernameValidationState = ModelState.GetFieldValidationState(nameof(username));
-            if (usernameValidationState == ModelValidationState.Invalid)
-            {
-                RouteValueDictionary routeInfo = new() { { "username", username } };
-                return RedirectToAction("InvalidData", routeInfo);
-            }
+        private readonly ITwitterService twitterService;
 
-            var userTweetsModel = await UserTweetsModel.CreateModel(username);
-            return View(userTweetsModel);
+        public HomeController(ITwitterService twitterService)
+        {
+            this.twitterService = twitterService;
         }
 
-        [HttpPost]
-        [ActionName("Index")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index_Post(
-            [MaxLength(50), MinLength(4), Required] string? username)
+        public async Task<IActionResult> Index(
+            TwitterUsernameModel model)
         {
-            var usernameValidationState = ModelState.GetFieldValidationState(nameof(username));
-            if (usernameValidationState == ModelValidationState.Invalid)
-            {
-                RouteValueDictionary routeInfo = new() { { "username", username } };
-                return RedirectToAction("InvalidData", routeInfo);
-            }
-
-            var userTweetsModel = await UserTweetsModel.CreateModel(username);
+            var userTweetsModel = await twitterService.GetTweetsAsync(model.Username);
             return View(userTweetsModel);
         }
 
@@ -53,6 +34,11 @@ namespace MVCTwitterScraper.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
         }
     }
 }

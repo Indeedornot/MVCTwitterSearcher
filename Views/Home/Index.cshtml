@@ -1,4 +1,5 @@
-﻿@model MVCTwitterScraper.Models.Twitter.UserTweetsModel
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Tweetinvi.Models.ITweet[]
 
 @{
     ViewData["Title"] = "Twitter Scraper";
@@ -17,4 +18,11 @@
 
 
 //TODO: Maybe make it scale width
-@await Html.PartialAsync("../PartialViews/_PartialTweetDisplay", Model)
+@if (Model.Length > 0)
+{
+    @(await Html.PartialAsync("../PartialViews/_PartialTweetDisplay", Model))
+}
+
+@section Scripts {
+    <script src="~/bundles/jqueryval"></script>  
+}  

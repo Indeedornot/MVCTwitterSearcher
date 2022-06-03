@@ -1,4 +1,4 @@
-namespace MVCTwitterScraper.Models
+namespace MVCTwitterSearcher.Models
 {
     public class ErrorViewModel
     {
