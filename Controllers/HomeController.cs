@@ -17,8 +17,7 @@ namespace MVCTwitterSearcher.Controllers
             this.twitterService = twitterService;
         }
 
-        public async Task<IActionResult> Index(
-            TwitterUsernameModel model)
+        public async Task<IActionResult> Index(TwitterUsernameModel model)
         {
             var userTweetsModel = await twitterService.GetTweetsAsync(model.Username);
             return View(userTweetsModel);
