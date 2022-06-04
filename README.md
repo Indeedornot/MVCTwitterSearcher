@@ -1,4 +1,4 @@
-# TwitterScraper - First Contact with Asp.Net Core
+# MVCTwitterSearcher - First Contact with Asp.Net Core
 
 Retrieving Tweets by user of given Username and showing them
 
